@@ -60,6 +60,13 @@ public class MovePB : MonoBehaviour
         {
             _jumpInProgress = false;
         }
+
+        // Once the user is far from the ground, indicate a jump is no longer in progress
+        // This will require the user to hit the ground again before jumping again.
+        if (_jumpInProgress && _transform.position[1] > CloseToGroundThreshold)
+        {
+            _jumpInProgress = false;
+        }
     }
 
     /** Return the euclidean norm of x and y */

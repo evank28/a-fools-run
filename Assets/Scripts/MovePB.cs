@@ -8,11 +8,14 @@ public class MovePB : MonoBehaviour
     private float _rotationInput;
     private Vector3 _userRot;
     private bool _userJumped;
+    private bool _jumpInProgress = false;
 
-    private const float _inputScale = 0.5f;
-    private const float _groundThreshold = 0.1f;
-    private const float _jumpMultiplier = 1.6f;
-    private const float _maxSpeed = 5.0f;
+
+    private const float InputScale = 0.5f;
+    private const float GroundThreshold = 0;
+    private const float CloseToGroundThreshold = 0.1f;
+    private const float JumpMultiplier = 1.6f;
+    private const float MaxSpeed = 5.0f;
 
     private Rigidbody _rigidbody;
     private Transform _transform;
@@ -39,15 +42,23 @@ public class MovePB : MonoBehaviour
 
         // Up is always z so velocity of x and z is clamped down
         if (euclideanNorm(_rigidbody.velocity.x,
-                          _rigidbody.velocity.z) < _maxSpeed)
-          _rigidbody.velocity += transform.forward * _playerInput * _inputScale;
+                          _rigidbody.velocity.z) < MaxSpeed)
+          _rigidbody.velocity += transform.forward * _playerInput * InputScale;
 
         // If the player is *close* to the ground, the jump will be triggered.
         // This allows for a "harder"/"longer" keypress to enable a slightly larger jump.
-        if(_userJumped && _transform.position[1] <= _groundThreshold)
+        if(_userJumped && ((_jumpInProgress && _transform.position[1] <= CloseToGroundThreshold) ||  _transform.position[1] <= GroundThreshold))
         {
-            _rigidbody.AddForce(Vector3.up * _jumpMultiplier, ForceMode.Impulse);
+            _rigidbody.AddForce(Vector3.up * JumpMultiplier, ForceMode.Impulse);
             _userJumped = false;
+            _jumpInProgress = true;
+        }
+
+        // Once the user is far from the ground, indicate a jump is no longer in progress
+        // This will require the user to hit the ground again before jumping again.
+        if (_jumpInProgress && _transform.position[1] > CloseToGroundThreshold)
+        {
+            _jumpInProgress = false;
         }
     }
 

@@ -36,8 +36,11 @@ public class MovePB : MonoBehaviour
         _userRot += new Vector3(0, _rotationInput, 0);
 
         _transform.rotation = Quaternion.Euler(_userRot);
-        _rigidbody.velocity += transform.forward * _playerInput * _inputScale;
-        _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, _maxSpeed);
+
+        // Up is always z so velocity of x and z is clamped down
+        if (euclideanNorm(_rigidbody.velocity.x,
+                          _rigidbody.velocity.z) < _maxSpeed)
+          _rigidbody.velocity += transform.forward * _playerInput * _inputScale;
 
         // If the player is *close* to the ground, the jump will be triggered.
         // This allows for a "harder"/"longer" keypress to enable a slightly larger jump.
@@ -46,5 +49,10 @@ public class MovePB : MonoBehaviour
             _rigidbody.AddForce(Vector3.up * _jumpMultiplier, ForceMode.Impulse);
             _userJumped = false;
         }
+    }
+
+    /** Return the euclidean norm of x and y */
+    private float euclideanNorm (float x, float y) {
+      return Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2));
     }
 }

@@ -40,10 +40,11 @@ public class MovePB : MonoBehaviour
 
         _transform.rotation = Quaternion.Euler(_userRot);
 
-        // Up is always z so velocity of x and z is clamped down
+        // Up is always y so velocity of x and z is clamped down
         if (euclideanNorm(_rigidbody.velocity.x,
-                          _rigidbody.velocity.z) < MaxSpeed)
+                          _rigidbody.velocity.z) < MaxSpeed) {
           _rigidbody.velocity += transform.forward * _playerInput * InputScale;
+        }
 
         // If the player is *close* to the ground, the jump will be triggered.
         // This allows for a "harder"/"longer" keypress to enable a slightly larger jump.

@@ -48,7 +48,9 @@ public class MovePB : MonoBehaviour
 
         // If the player is *close* to the ground, the jump will be triggered.
         // This allows for a "harder"/"longer" keypress to enable a slightly larger jump.
-        if(_userJumped && ((_jumpInProgress && _transform.position[1] <= CloseToGroundThreshold) ||  _transform.position[1] <= GroundThreshold))
+        if(_userJumped &&
+           ((_jumpInProgress && _transform.position[1] <= CloseToGroundThreshold) 
+           ||  _transform.position[1] <= GroundThreshold))
         {
             _rigidbody.AddForce(Vector3.up * JumpMultiplier, ForceMode.Impulse);
             _userJumped = false;

@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6238935051499928100}
   m_Layer: 0
   m_Name: bluePotion
-  m_TagString: Untagged
+  m_TagString: potion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,8 +172,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnObject: {fileID: 0}
   timeToSpawn: 0
-  xmin: 0
-  xmax: 0
-  ymin: 0
-  ymax: 0
-  z: 0

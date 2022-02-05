@@ -35,8 +35,9 @@ public class MovePB : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _userRot = _transform.rotation.eulerAngles;
-        _userRot += new Vector3(0, _rotationInput, 0);
+         _userRot[1] = _transform.rotation.eulerAngles[1];
+
+         _userRot += new Vector3(0, _rotationInput, 0);
 
         _transform.rotation = Quaternion.Euler(_userRot);
 
@@ -49,19 +50,12 @@ public class MovePB : MonoBehaviour
         // If the player is *close* to the ground, the jump will be triggered.
         // This allows for a "harder"/"longer" keypress to enable a slightly larger jump.
         if(_userJumped &&
-           ((_jumpInProgress && _transform.position[1] <= CloseToGroundThreshold) 
+           ((_jumpInProgress && _transform.position[1] <= CloseToGroundThreshold)
            ||  _transform.position[1] <= GroundThreshold))
         {
             _rigidbody.AddForce(Vector3.up * JumpMultiplier, ForceMode.Impulse);
             _userJumped = false;
             _jumpInProgress = true;
-        }
-
-        // Once the user is far from the ground, indicate a jump is no longer in progress
-        // This will require the user to hit the ground again before jumping again.
-        if (_jumpInProgress && _transform.position[1] > CloseToGroundThreshold)
-        {
-            _jumpInProgress = false;
         }
 
         // Once the user is far from the ground, indicate a jump is no longer in progress

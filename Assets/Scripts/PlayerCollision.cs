@@ -4,25 +4,21 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
-  public GameObject sphere;
-  public GameObject cube;
+  public GameObject character1;
+  public GameObject character2;
 
-  void Start() {
-    sphere.transform.position = transform.position;
-    //Instantiate(sphere, transform.position, Quaternion.identity);
-    sphere.SetActive(true);
-  }
-
-  void Update() {
-    if (Input.GetKeyDown(KeyCode.F)) {
-      if (sphere.active == true) {
-        cube.transform.position = sphere.transform.position;
-        sphere.SetActive(false);
-        cube.SetActive(true);
-      } else if (cube.active == true) {
-        sphere.transform.position = cube.transform.position;
-        cube.SetActive(false);
-        sphere.SetActive(true);
+  void OnCollisionEnter(Collision collision) {
+    if (collision.collider.CompareTag("Potion")) {
+      if (character2.active == true) {
+        character1.transform.position = character2.transform.position;
+        character1.transform.rotation = character2.transform.rotation;
+        character2.SetActive(false);
+        character1.SetActive(true);
+      } else if (character1.active == true) {
+        character2.transform.position = character1.transform.position;
+        character2.transform.rotation = character1.transform.rotation;
+        character1.SetActive(false);
+        character2.SetActive(true);
       }
     }
   }

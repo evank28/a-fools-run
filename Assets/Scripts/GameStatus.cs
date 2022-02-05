@@ -9,10 +9,15 @@ public class GameStatus : MonoBehaviour
     public GameObject timeRemainingObj;
     public GameObject gameStatObj;
     public GameObject gameOperObj;
+    public GameObject playerObj;
+
     private Text timeRemainingText;
     private Text gameStatText;
     private Text gameOperText;
-    private float timeLeft = 90;
+
+    public float timeLeft = 90;
+    public bool winStat = false;
+    private Rigidbody _rigidbody;
 
     // Start is called before the first frame update
     void Start()
@@ -23,28 +28,40 @@ public class GameStatus : MonoBehaviour
         timeRemainingText.text = "Time Remaining: " + timeLeft;
         gameStatText.text = "";
         gameOperText.text = "";
+        _rigidbody = playerObj.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Check remaining time of this round
         if (timeLeft > 0)
         {
             timeLeft -= Time.deltaTime;
         } else {
-            PauseGame(timeLeft);
+            PauseGame("lose");
         }
-
         DisplayTime(timeLeft);
 
+        // Check if player has reached end of the maze
+        if (playerObj.transform.position.z > 23)
+        {
+            winStat = true;
+        }
+        if (winStat == true)
+        {
+            PauseGame("win");
+        }
+
+        // Detect input about pause and resume
         if (Input.GetKeyDown(KeyCode.P))
         {
-            PauseGame(timeLeft);
+            PauseGame("pause");
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (timeLeft > 0)
+            if (timeLeft > 0 & winStat == false)
             {
                 ResumeGame();
             } else {
@@ -65,21 +82,24 @@ public class GameStatus : MonoBehaviour
         }
     }
 
-    void PauseGame(float time)
+    public void PauseGame(string type)
     {
         Time.timeScale = 0;
 
-        if (time > 0)
+        if (type == "pause")
         {
             DisplayMessage(gameStatText, "Game Paused");
             DisplayMessage(gameOperText, "Resume");
-        } else {
-            DisplayMessage(gameStatText, "Game Over");
+        } else if (type == "lose") {
+            DisplayMessage(gameStatText, "Game Over!");
+            DisplayMessage(gameOperText, "Restart");
+        } else if (type == "win") {
+            DisplayMessage(gameStatText, "You Win!");
             DisplayMessage(gameOperText, "Restart");
         }
     }
 
-    void ResumeGame()
+    public void ResumeGame()
     {
         Time.timeScale = 1;
         gameStatText.text = "";
@@ -92,28 +112,34 @@ public class GameStatus : MonoBehaviour
         Time.timeScale = 1;
         gameStatText.text = "";
         gameOperText.text = "";
+        winStat = false;
     }
 
     void DisplayMessage(Text textArea, string message)
     {
-        if (message == "Game Over")
+        if (message == "Game Over!")
         {
-            textArea.text = "Game Over";
-        }
-
-        if (message == "Game Paused")
+            textArea.text = "Game Over!";
+        } 
+        else if (message == "Game Paused")
         {
             textArea.text = "Game Paused";
-        }
-
-        if (message == "Resume")
+        } 
+        else if (message == "Resume")
         {
             textArea.text = "Resume";
-        }
-
-        if (message == "Restart")
+        } 
+        else if (message == "You Win!")
+        {
+            textArea.text = "You Win!";
+        } 
+        else if (message == "Restart")
         {
             textArea.text = "Restart";
+        } 
+        else
+        {
+            textArea.text = "ERROR: Unknown input!";
         }
     }
 }

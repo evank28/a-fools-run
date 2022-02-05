@@ -35,8 +35,7 @@ public class MovePB : MonoBehaviour
 
     private void FixedUpdate()
     {
-         _userRot[1] = _transform.rotation.eulerAngles[1];
-
+         _userRot = _transform.rotation.eulerAngles;
          _userRot += new Vector3(0, _rotationInput, 0);
 
         _transform.rotation = Quaternion.Euler(_userRot);

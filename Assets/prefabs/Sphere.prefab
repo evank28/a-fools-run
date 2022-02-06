@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 7074349349627482807}
   - component: {fileID: 7074349349627482804}
   - component: {fileID: 7074349349627482794}
+  - component: {fileID: 8536502824107370900}
+  - component: {fileID: 9039096687827522051}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Player
@@ -140,3 +142,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnObject: {fileID: 6508914833389242232, guid: 8f2b4390830e67d4696978845e24c444, type: 3}
   timeToSpawn: 5
+--- !u!95 &8536502824107370900
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074349349627482805}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &9039096687827522051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074349349627482805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d82470951e43bd46923f2ceddf20cd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character1: {fileID: 7074349349627482805}
+  character2: {fileID: 0}

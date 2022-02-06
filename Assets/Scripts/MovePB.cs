@@ -20,10 +20,14 @@ public class MovePB : MonoBehaviour
     private Rigidbody _rigidbody;
     private Transform _transform;
 
+    Animator animator;
+
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _transform = GetComponent<Transform>();
+        animator = GetComponent<Animator>();
+        // StartCoroutine(printStates());
     }
 
     void Update()
@@ -41,9 +45,18 @@ public class MovePB : MonoBehaviour
         _transform.rotation = Quaternion.Euler(_userRot);
 
         // Up is always y so velocity of x and z is clamped down
-        if (euclideanNorm(_rigidbody.velocity.x,
-                          _rigidbody.velocity.z) < MaxSpeed) {
+        var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);
+        if (norm < MaxSpeed) {
           _rigidbody.velocity += transform.forward * _playerInput * InputScale;
+          animator.SetFloat("velocity", norm);
+          if (norm != 0)
+          {
+              animator.SetTrigger("triggerWalking");
+          }
+          else
+          {
+              animator.SetTrigger("triggerIdle");
+          }
         }
 
         // If the player is *close* to the ground, the jump will be triggered.
@@ -63,6 +76,20 @@ public class MovePB : MonoBehaviour
         {
             _jumpInProgress = false;
         }
+    }
+    
+    IEnumerator printStates() {
+        var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);
+        if (norm != 0)
+        {
+            print("walking...");
+            print($"velocity: {norm}");
+        }
+        else
+        {
+            print("idle...");
+        }
+        yield return new WaitForSeconds(5);
     }
 
     /** Return the euclidean norm of x and y */

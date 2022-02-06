@@ -7,18 +7,16 @@ public class Spawn : MonoBehaviour
   public GameObject spawnObject; // The object to spawn repeatedly
   public float timeToSpawn; // Time in seconds before the next spawn of spawnObject
   private Vector3 position; // position to spawn
-
-  void Start() {
-    StartCoroutine(spawn());
-  }
+  private GameObject player; // The active character right now
+  private bool spawnStarted; // Have we already started spawning?
 
   IEnumerator spawn () {
-
       while(true) {
+        spawnStarted = true;
         // Set the position of the spawn object as the position of the player
-        position = transform.position;
-        position += transform.forward * 3;
-        position += transform.up * 7;
+        position = player.transform.position;
+        position += player.transform.forward * 3;
+        position += player.transform.up * 7;
 
 
         Debug.Log("Instantiating object " + spawnObject.name + " in location "
@@ -36,5 +34,10 @@ public class Spawn : MonoBehaviour
         should decrease as the player levels up */
         yield return new WaitForSeconds (timeToSpawn);
       }
+  }
+
+  public void setActivePlayer(GameObject activePlayer) {
+    player = activePlayer;
+    if (!spawnStarted) StartCoroutine(spawn());
   }
 }

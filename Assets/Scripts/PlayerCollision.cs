@@ -6,6 +6,7 @@ public class PlayerCollision : MonoBehaviour
 {
   public GameObject character1;
   public GameObject character2;
+  public AudioClip hitpotion;
 
   void Start()
   {
@@ -17,6 +18,9 @@ public class PlayerCollision : MonoBehaviour
   {
     print($"collision occured with {collision.collider.name}");
     if (collision.collider.CompareTag("Potion")) {
+      GetComponent<AudioSource>().clip = hitpotion;
+      GetComponent<AudioSource>().Play();
+
       collision.collider.gameObject.GetComponent<potionCollision>().Explode();
       if (character2.activeSelf) {
         character1.transform.position = character2.transform.position;
@@ -32,5 +36,4 @@ public class PlayerCollision : MonoBehaviour
         transform.parent.gameObject.GetComponent<Spawn>().setActivePlayer(character2);
       }
     }
-  }
-}
+  }}

@@ -16,7 +16,7 @@ public class potionCollision : MonoBehaviour
                                     Quaternion.identity);
     Destroy(gameObject);
   }
-  
+
   public void Explode() {
     GameObject effect = Instantiate(particleEffect,
       transform.position,

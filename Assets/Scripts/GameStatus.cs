@@ -28,7 +28,6 @@ public class GameStatus : MonoBehaviour
         timeRemainingText.text = "Time Remaining: " + timeLeft;
         gameStatText.text = "";
         gameOperText.text = "";
-        _rigidbody = playerObj.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -44,9 +43,13 @@ public class GameStatus : MonoBehaviour
         DisplayTime(timeLeft);
 
         // Check if player has reached end of the maze
-        if (playerObj.transform.position.z > 23)
-        {
-            winStat = true;
+        for (int i=0; i<playerObj.transform.childCount; i++)
+        {       
+            GameObject childObj = playerObj.transform.GetChild(i).gameObject;
+            if (childObj.transform.position.z > 23)
+            {
+                winStat = true;
+            }
         }
         if (winStat == true)
         {

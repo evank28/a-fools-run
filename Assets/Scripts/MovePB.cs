@@ -89,11 +89,6 @@ public class MovePB : MonoBehaviour
 
         // //////////////////////////////////////////////////////////////////////////////
     }
-
-    /** Return the euclidean norm of x and y */
-    private float euclideanNorm (float x, float y) {
-        return Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2));
-    }
     
     IEnumerator printStates() {
         var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);

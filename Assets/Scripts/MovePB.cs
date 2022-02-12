@@ -21,10 +21,14 @@ public class MovePB : MonoBehaviour
     private Rigidbody _rigidbody;
     private Transform _transform;
 
+    Animator animator;
+
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _transform = GetComponent<Transform>();
+        animator = GetComponent<Animator>();
+        // StartCoroutine(printStates());
     }
 
     void Update()
@@ -42,14 +46,25 @@ public class MovePB : MonoBehaviour
         _transform.rotation = Quaternion.Euler(_userRot);
 
         // Up is always y so velocity of x and z is clamped down
-        if (euclideanNorm(_rigidbody.velocity.x,
-                          _rigidbody.velocity.z) < MaxSpeed) {
-            _rigidbody.velocity += transform.forward * _playerInput * MoveScale;
+        var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);
+        if (norm < MaxSpeed) {
+          _rigidbody.velocity += transform.forward * _playerInput * MoveScale;
+          animator.SetFloat("velocity", norm);
+          if (norm != 0)
+          {
+              animator.SetTrigger("triggerWalking");
+          }
+          else
+          {
+              animator.SetTrigger("triggerIdle");
+          }
         }
 
         // If the player is *close* to the ground, the jump will be triggered.
         // This allows for a "harder"/"longer" keypress to enable a slightly larger jump.
-        if(_userJumped && ((_jumpInProgress && _transform.position[1] <= CloseToGroundThreshold) ||  _transform.position[1] <= GroundThreshold))
+        if(_userJumped &&
+           ((_jumpInProgress && _transform.position[1] <= CloseToGroundThreshold)
+           ||  _transform.position[1] <= GroundThreshold))
         {
             _rigidbody.AddForce(Vector3.up * JumpMultiplier, ForceMode.Impulse);
             _userJumped = false;
@@ -78,5 +93,24 @@ public class MovePB : MonoBehaviour
     /** Return the euclidean norm of x and y */
     private float euclideanNorm (float x, float y) {
         return Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2));
+    }
+    
+    IEnumerator printStates() {
+        var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);
+        if (norm != 0)
+        {
+            print("walking...");
+            print($"velocity: {norm}");
+        }
+        else
+        {
+            print("idle...");
+        }
+        yield return new WaitForSeconds(5);
+    }
+
+    /** Return the euclidean norm of x and y */
+    private float euclideanNorm (float x, float y) {
+      return Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2));
     }
 }

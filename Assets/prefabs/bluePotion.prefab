@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6238935051499928100}
   m_Layer: 0
   m_Name: bluePotion
-  m_TagString: Untagged
+  m_TagString: Potion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,8 +155,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dc4a58eca8c29b4193661c74220f9a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   particleEffect: {fileID: 100006, guid: 8b940ede2c20ec44ba870a2cdd277051, type: 3}
 --- !u!114 &6238935051499928100
 MonoBehaviour:
@@ -168,12 +168,7 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e6a53e6862514b4cb171173c1a7fde9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   spawnObject: {fileID: 0}
   timeToSpawn: 0
-  xmin: 0
-  xmax: 0
-  ymin: 0
-  ymax: 0
-  z: 0

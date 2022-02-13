@@ -9,12 +9,13 @@ public class MovePB : MonoBehaviour
     private Vector3 _userRot;
     private bool _userJumped;
     private bool _jumpInProgress = false;
-
-
-    private const float InputScale = 0.5f;
+    
+    // original mass, drag, angularDrag: 1, 2, 0.05;
+    private float MoveScale = 0.5f; // original 0.5
+    private const float RotateScale = 3.0f; // original 1.0
     private const float GroundThreshold = 0;
     private const float CloseToGroundThreshold = 0.1f;
-    private const float JumpMultiplier = 1.6f;
+    private const float JumpMultiplier = 1.6f; // original 1.6
     private const float MaxSpeed = 5.0f;
 
     private Rigidbody _rigidbody;
@@ -39,15 +40,15 @@ public class MovePB : MonoBehaviour
 
     private void FixedUpdate()
     {
-         _userRot = _transform.rotation.eulerAngles;
-         _userRot += new Vector3(0, _rotationInput, 0);
+        _userRot = _transform.rotation.eulerAngles;
+        _userRot += new Vector3(0, _rotationInput * RotateScale, 0);
 
         _transform.rotation = Quaternion.Euler(_userRot);
 
         // Up is always y so velocity of x and z is clamped down
         var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);
         if (norm < MaxSpeed) {
-          _rigidbody.velocity += transform.forward * _playerInput * InputScale;
+          _rigidbody.velocity += transform.forward * _playerInput * MoveScale;
           animator.SetFloat("velocity", norm);
           if (norm != 0)
           {
@@ -76,6 +77,17 @@ public class MovePB : MonoBehaviour
         {
             _jumpInProgress = false;
         }
+
+        // Seems to be a duplicate code block. Please verify. ///////////////////////////
+
+        // Once the user is far from the ground, indicate a jump is no longer in progress
+        // This will require the user to hit the ground again before jumping again.
+        // if (_jumpInProgress && _transform.position[1] > CloseToGroundThreshold)
+        // {
+        //     _jumpInProgress = false;
+        // }
+
+        // //////////////////////////////////////////////////////////////////////////////
     }
     
     IEnumerator printStates() {

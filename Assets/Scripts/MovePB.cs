@@ -47,17 +47,15 @@ public class MovePB : MonoBehaviour
 
         // Up is always y so velocity of x and z is clamped down
         var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);
-        if (norm < MaxSpeed) {
-          _rigidbody.velocity += transform.forward * _playerInput * MoveScale;
-          animator.SetFloat("velocity", norm);
-          if (norm != 0 && IsGrounded())
-          {
-              animator.SetTrigger("triggerWalking");
-          }
-          else
-          {
-              animator.SetTrigger("triggerIdle");
-          }
+        _rigidbody.velocity += transform.forward * _playerInput * MoveScale;
+        animator.SetFloat("velocity", norm);
+        if (norm != 0 && IsGrounded())
+        {
+            animator.SetTrigger("triggerWalking");
+        }
+        else
+        {
+            animator.SetTrigger("triggerIdle");
         }
 
         // Only able to jump if you are on the ground

@@ -88,6 +88,6 @@ public class MovePB : MonoBehaviour
      the player is on some sort of ground */
     private bool IsGrounded()
     {
-      return Physics.Raycast(transform.position, Vector3.down, distanceToGround-0.3f);
+      return Physics.Raycast(transform.position, Vector3.down, distanceToGround - 0.3f);
     }
 }

@@ -44,9 +44,9 @@ public class GameStatus : MonoBehaviour
 
         // Check if player has reached end of the maze
         for (int i=0; i<playerObj.transform.childCount; i++)
-        {       
+        {
             GameObject childObj = playerObj.transform.GetChild(i).gameObject;
-            if (childObj.transform.position.z > 23)
+            if (PlayerCollision.hitFinishLine)
             {
                 winStat = true;
             }
@@ -123,23 +123,23 @@ public class GameStatus : MonoBehaviour
         if (message == "Game Over!")
         {
             textArea.text = "Game Over!";
-        } 
+        }
         else if (message == "Game Paused")
         {
             textArea.text = "Game Paused";
-        } 
+        }
         else if (message == "Resume")
         {
             textArea.text = "Resume";
-        } 
+        }
         else if (message == "You Win!")
         {
             textArea.text = "You Win!";
-        } 
+        }
         else if (message == "Restart")
         {
             textArea.text = "Restart";
-        } 
+        }
         else
         {
             textArea.text = "ERROR: Unknown input!";

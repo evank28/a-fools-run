@@ -7,11 +7,13 @@ public class PlayerCollision : MonoBehaviour
   public GameObject character1;
   public GameObject character2;
   public AudioClip hitpotion;
+  public static bool hitFinishLine;
 
   void Start()
   {
     // Set the active player to player 2 for now for transform of spawn to work
     transform.parent.gameObject.GetComponent<Spawn>().setActivePlayer(character2);
+    hitFinishLine = false;
   }
 
   void OnCollisionEnter(Collision collision)
@@ -36,4 +38,8 @@ public class PlayerCollision : MonoBehaviour
         transform.parent.gameObject.GetComponent<Spawn>().setActivePlayer(character2);
       }
     }
-  }}
+    if (collision.collider.CompareTag("FinishLine")) {
+      hitFinishLine = true;
+    }
+  }
+}

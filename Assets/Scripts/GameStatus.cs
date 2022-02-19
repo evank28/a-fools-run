@@ -46,7 +46,7 @@ public class GameStatus : MonoBehaviour
         for (int i=0; i<playerObj.transform.childCount; i++)
         {
             GameObject childObj = playerObj.transform.GetChild(i).gameObject;
-            if (childObj.transform.position.z < -10)
+            if (PlayerCollision.hitFinishLine)
             {
                 winStat = true;
             }

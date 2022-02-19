@@ -81,7 +81,7 @@ public class GameStatus : MonoBehaviour
         } else {
             float minutes = Mathf.FloorToInt(time / 60);
             float seconds = Mathf.FloorToInt(time % 60);
-            timeRemainingText.text = "Time Remainging: " + string.Format("{0:00}:{1:00}", minutes, seconds);
+            timeRemainingText.text = "Time Remaining: " + string.Format("{0:00}:{1:00}", minutes, seconds);
         }
     }
 

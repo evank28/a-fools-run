@@ -9,6 +9,8 @@ public class PlayerCollision : MonoBehaviour
   public AudioClip hitpotion;
   public static bool hitFinishLine;
 
+  public GameObject camera;
+
   void Start()
   {
     // Set the active player to player 2 for now for transform of spawn to work
@@ -31,6 +33,9 @@ public class PlayerCollision : MonoBehaviour
         character2.SetActive(false);
         character1.SetActive(true);
         transform.parent.gameObject.GetComponent<Spawn>().setActivePlayer(character1);
+
+        camera.GetComponent<CameraController>().PlayerTransform = character1.transform.Find("Focus");
+
       } else if (character1.activeSelf) {
         print("Changing to character 2\n");
         character2.transform.position = character1.transform.position;
@@ -38,6 +43,8 @@ public class PlayerCollision : MonoBehaviour
         character1.SetActive(false);
         character2.SetActive(true);
         transform.parent.gameObject.GetComponent<Spawn>().setActivePlayer(character2);
+
+        camera.GetComponent<CameraController>().PlayerTransform = character2.transform.Find("Focus");
       }
     }
     if (collision.collider.CompareTag("FinishLine")) {

@@ -15,8 +15,8 @@ public class CameraController : MonoBehaviour
     public float smoothFactor = 0.5f;
 
     // multiplier for camera rotation
-    public float rotateSpeedX = 2.0f;
-    public float rotateSpeedY = 2.0f;
+    public float rotateSpeedX = 3.0f;
+    public float rotateSpeedY = 3.0f;
 
     // switches related to camera roration
     public bool lookAtPlayer = true;
@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
     Quaternion center;
 
     // camera rotaion angle limit
-    public float maxAngle = 45.0f;
+    public float maxAngle = 0.1f;
 
     // Start is called before the first frame update
     void Start() {
@@ -37,24 +37,26 @@ public class CameraController : MonoBehaviour
     }
 
     // LateUpdate is called after Update methods
-    void LateUpdate() {
+    void Update() {
         // let camera follow player
-        Vector3 newPosition = PlayerTransform.position + _cameraOffset;
+        Vector3 newPosition = PlayerTransform.position + this._cameraOffset;
         transform.position = Vector3.Slerp(transform.position, newPosition, smoothFactor);
 
         if (rotateAroundPlayer) {
             // get mouse input can calculate rotation angles
             Quaternion cameraTurnAngleX = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateSpeedX, Vector3.up);
-            Quaternion cameraTurnAngleY = Quaternion.AngleAxis(Input.GetAxis("Mouse Y") * rotateSpeedY, Vector3.right);
+            Quaternion cameraTurnAngleY = Quaternion.AngleAxis(Input.GetAxis("Mouse Y") * rotateSpeedY * -1, Vector3.right);
 
             // perform vertical rotation within limit
             Quaternion temp = transform.rotation * cameraTurnAngleY;
-            if (Quaternion.Angle(center, temp) < this.maxAngle) {
-                _cameraOffset = cameraTurnAngleY * _cameraOffset;
+            Debug.Log(Quaternion.Angle(this.center, temp));
+            if (Quaternion.Angle(this.center, temp) < this.maxAngle) {
+                this._cameraOffset = cameraTurnAngleY * this._cameraOffset;
             }
 
             // perform horizontal rotation
-            _cameraOffset = cameraTurnAngleX * _cameraOffset;
+            this._cameraOffset = cameraTurnAngleX * this._cameraOffset;
+            this.center = cameraTurnAngleX * this.center;
         }
 
         // let the camera focus on player

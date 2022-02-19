@@ -25,12 +25,14 @@ public class PlayerCollision : MonoBehaviour
 
       collision.collider.gameObject.GetComponent<potionCollision>().Explode();
       if (character2.activeSelf) {
+        print("Changing to character 1\n");
         character1.transform.position = character2.transform.position;
         character1.transform.rotation = character2.transform.rotation;
         character2.SetActive(false);
         character1.SetActive(true);
         transform.parent.gameObject.GetComponent<Spawn>().setActivePlayer(character1);
       } else if (character1.activeSelf) {
+        print("Changing to character 2\n");
         character2.transform.position = character1.transform.position;
         character2.transform.rotation = character1.transform.rotation;
         character1.SetActive(false);

@@ -14,7 +14,7 @@ public class MovePB : MonoBehaviour
     private float MoveScale = 0.5f; // original 0.5
     private const float RotateScale = 3.0f; // original 1.0
     private float distanceToGround;
-    private const float JumpMultiplier = 2.0f; // original 1.6
+    private const float JumpMultiplier = 4.0f; // original 1.6
     private const float MaxSpeed = 5.0f;
 
     private Rigidbody _rigidbody;
@@ -56,21 +56,27 @@ public class MovePB : MonoBehaviour
         // Up is always y so velocity of x and z is clamped down
         var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);
         _rigidbody.velocity += transform.forward * _playerInput * MoveScale;
-        animator.SetFloat("velocity", norm);
+        //animator.SetFloat("velocity", norm);
 
 
-
-        if (moving_forward && is_grounded)
+        if (moving_forward && !jumping)
         {
-            animator.SetTrigger("triggerWalking");
+          animator.SetBool("isWalking", true);
+          animator.SetBool("walkJumping", false);
         }
-        else if (jumping)
+        else if (moving_forward && !is_grounded)
         {
-          animator.SetTrigger("triggerJump");
+          animator.SetBool("isWalking", false);
+          animator.SetBool("walkJumping", true);
         }
-        else if (is_grounded)
+        else if (jumping && !moving_forward)
         {
-            animator.SetTrigger("triggerIdle");
+          animator.SetBool("isJumping", true);
+        }
+        else if (is_grounded && !moving_forward)
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isJumping", false);
         }
 
         // Only able to jump if you are on the ground

@@ -20,7 +20,11 @@ public class MovePB : MonoBehaviour
     private Rigidbody _rigidbody;
     private Transform _transform;
 
+    // Animation related
     Animator animator;
+    bool moving_forward;
+    bool is_grounded;
+    bool jumping;
 
     void Start()
     {
@@ -36,6 +40,10 @@ public class MovePB : MonoBehaviour
         _playerInput = Input.GetAxis("Vertical");
         _rotationInput = Input.GetAxis("Horizontal");
         _userJumped = Input.GetButton("Jump");
+
+        moving_forward = Input.GetKey("w") || Input.GetKey("s");
+        is_grounded = IsGrounded();
+        jumping  = Input.GetKey("space");
     }
 
     private void FixedUpdate()
@@ -49,17 +57,24 @@ public class MovePB : MonoBehaviour
         var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);
         _rigidbody.velocity += transform.forward * _playerInput * MoveScale;
         animator.SetFloat("velocity", norm);
-        if (norm != 0 && IsGrounded())
+
+
+
+        if (moving_forward && is_grounded)
         {
             animator.SetTrigger("triggerWalking");
         }
-        else
+        else if (jumping)
+        {
+          animator.SetTrigger("triggerJump");
+        }
+        else if (is_grounded)
         {
             animator.SetTrigger("triggerIdle");
         }
 
         // Only able to jump if you are on the ground
-        if (IsGrounded() && _userJumped)
+        if (is_grounded && _userJumped)
         {
           _rigidbody.AddForce(Vector3.up * JumpMultiplier, ForceMode.Impulse);
         }

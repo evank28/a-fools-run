@@ -946,7 +946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7074349349627482805, guid: d8c24dd766f1f454a89375fedac60a9e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7074349349627482807, guid: d8c24dd766f1f454a89375fedac60a9e, type: 3}
       propertyPath: m_UseGravity
@@ -20707,7 +20707,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 774206895639464820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31c58eef20609f245bfded0650fa12ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c771bb8c8f48f34389e21421d1577b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!82 &774206895639464824
@@ -20806,6 +20806,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &774206895639464825
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774206895639464820}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 67c0f177200f4ab4c8c4d220eb228bbe, type: 3}
+  m_Controller: {fileID: 9100000, guid: 9813495ad18f06049a29dd387a5a0c31, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &919132148059225078 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4135217990669876964, guid: 8decc7406b983214fa0cb0e80400d15a, type: 3}
@@ -21213,7 +21232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8173450078851431614, guid: e6bdfbf2f9e206b4bb90b8d3e7c36903, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8173450078851431615, guid: e6bdfbf2f9e206b4bb90b8d3e7c36903, type: 3}
       propertyPath: hitpotion

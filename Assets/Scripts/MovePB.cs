@@ -14,13 +14,17 @@ public class MovePB : MonoBehaviour
     private float MoveScale = 0.5f; // original 0.5
     private const float RotateScale = 3.0f; // original 1.0
     private float distanceToGround;
-    private const float JumpMultiplier = 2.0f; // original 1.6
+    private const float JumpMultiplier = 4.0f; // original 1.6
     private const float MaxSpeed = 5.0f;
 
     private Rigidbody _rigidbody;
     private Transform _transform;
 
+    // Animation related
     Animator animator;
+    bool moving_forward;
+    bool is_grounded;
+    bool jumping;
 
     void Start()
     {
@@ -36,6 +40,10 @@ public class MovePB : MonoBehaviour
         _playerInput = Input.GetAxis("Vertical");
         _rotationInput = Input.GetAxis("Horizontal");
         _userJumped = Input.GetButton("Jump");
+
+        moving_forward = Input.GetKey("w") || Input.GetKey("s");
+        is_grounded = IsGrounded();
+        jumping  = Input.GetKey("space");
     }
 
     private void FixedUpdate()
@@ -48,18 +56,31 @@ public class MovePB : MonoBehaviour
         // Up is always y so velocity of x and z is clamped down
         var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);
         _rigidbody.velocity += transform.forward * _playerInput * MoveScale;
-        animator.SetFloat("velocity", norm);
-        if (norm != 0 && IsGrounded())
+        //animator.SetFloat("velocity", norm);
+
+
+        if (moving_forward && !jumping)
         {
-            animator.SetTrigger("triggerWalking");
+          animator.SetBool("isWalking", true);
+          animator.SetBool("walkJumping", false);
         }
-        else
+        else if (moving_forward && !is_grounded)
         {
-            animator.SetTrigger("triggerIdle");
+          animator.SetBool("isWalking", false);
+          animator.SetBool("walkJumping", true);
+        }
+        else if (jumping && !moving_forward)
+        {
+          animator.SetBool("isJumping", true);
+        }
+        else if (is_grounded && !moving_forward)
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isJumping", false);
         }
 
         // Only able to jump if you are on the ground
-        if (IsGrounded() && _userJumped)
+        if (is_grounded && _userJumped)
         {
           _rigidbody.AddForce(Vector3.up * JumpMultiplier, ForceMode.Impulse);
         }

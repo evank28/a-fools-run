@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7074349349627482795}
   - component: {fileID: 7074349349627482807}
   - component: {fileID: 7074349349627482804}
-  - component: {fileID: 7074349349627482794}
   - component: {fileID: 8536502824107370900}
   - component: {fileID: 6380341222349962012}
   m_Layer: 0
@@ -64,20 +63,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c58eef20609f245bfded0650fa12ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7074349349627482794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7074349349627482805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e6a53e6862514b4cb171173c1a7fde9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnObject: {fileID: 6508914833389242232, guid: 8f2b4390830e67d4696978845e24c444, type: 3}
-  timeToSpawn: 5
 --- !u!95 &8536502824107370900
 Animator:
   serializedVersion: 3
@@ -111,6 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character1: {fileID: 0}
   character2: {fileID: 7074349349627482805}
+  hitpotion: {fileID: 0}
 --- !u!1001 &5221718719275777032
 PrefabInstance:
   m_ObjectHideFlags: 0

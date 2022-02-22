@@ -10942,6 +10942,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5554774216576085785, guid: afdc1811367b91149927e3502d820cad, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7084603008094818959, guid: afdc1811367b91149927e3502d820cad, type: 3}
       propertyPath: m_Name
       value: Gem_1 (1)

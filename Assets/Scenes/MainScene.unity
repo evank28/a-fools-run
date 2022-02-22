@@ -1139,6 +1139,10 @@ PrefabInstance:
       propertyPath: character1
       value: 
       objectReference: {fileID: 6209785972894237905}
+    - target: {fileID: 6380341222349962012, guid: d8c24dd766f1f454a89375fedac60a9e, type: 3}
+      propertyPath: character3
+      value: 
+      objectReference: {fileID: 919132148059225078}
     - target: {fileID: 7074349349627482795, guid: d8c24dd766f1f454a89375fedac60a9e, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -18278,6 +18282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character1: {fileID: 265839101}
   character2: {fileID: 1552992525}
+  character3: {fileID: 0}
   hitpotion: {fileID: 0}
   camera: {fileID: 0}
 --- !u!1 &1568232628
@@ -24488,8 +24493,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d82470951e43bd46923f2ceddf20cd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character1: {fileID: 919132148059225078}
+  character1: {fileID: 6209785972894237905}
   character2: {fileID: 72671345}
+  character3: {fileID: 919132148059225078}
   hitpotion: {fileID: 8300000, guid: d52bcf49353bf944ab53bd021c585311, type: 3}
   camera: {fileID: 66241055}
 --- !u!114 &919132148059225080
@@ -24658,6 +24664,10 @@ PrefabInstance:
       propertyPath: character2
       value: 
       objectReference: {fileID: 72671345}
+    - target: {fileID: 2831215336790764572, guid: d8350b694559f3b4bb5d9af47b56c43e, type: 3}
+      propertyPath: character3
+      value: 
+      objectReference: {fileID: 919132148059225078}
     - target: {fileID: 3886333034428638136, guid: d8350b694559f3b4bb5d9af47b56c43e, type: 3}
       propertyPath: m_Avatar
       value: 

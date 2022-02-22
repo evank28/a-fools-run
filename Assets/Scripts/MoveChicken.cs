@@ -20,7 +20,11 @@ public class MoveChicken : MonoBehaviour
   private Rigidbody _rigidbody;
   private Transform _transform;
 
+  // Animation related
   Animator animator;
+  bool moving_forward;
+  bool is_grounded;
+  bool jumping;
 
   void Start()
   {
@@ -28,7 +32,7 @@ public class MoveChicken : MonoBehaviour
       _transform = GetComponent<Transform>();
       animator = GetComponent<Animator>();
       distanceToGround = GetComponent<Collider>().bounds.extents.y;
-      StartCoroutine(printStates());
+      //StartCoroutine(printStates());
   }
 
   void Update()
@@ -36,6 +40,10 @@ public class MoveChicken : MonoBehaviour
       _playerInput = Input.GetAxis("Vertical");
       _rotationInput = Input.GetAxis("Horizontal");
       _userJumped = Input.GetButton("Jump");
+
+      moving_forward = Input.GetKey("w") || Input.GetKey("s");
+      is_grounded = IsGrounded();
+      jumping  = Input.GetKey("space");
   }
 
   private void FixedUpdate()
@@ -49,17 +57,28 @@ public class MoveChicken : MonoBehaviour
       var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);
       _rigidbody.velocity += transform.forward * _playerInput * MoveScale;
       animator.SetFloat("velocity", norm);
-      if (norm != 0 && IsGrounded())
+      if (moving_forward)
       {
-          animator.SetTrigger("triggerRunning");
+          animator.SetBool("isIdle", false);
+          animator.SetBool("isJumping", false);
+          animator.SetBool("isWalking", true);
       }
-      else
+      else if (!moving_forward && !jumping)
       {
-          animator.SetTrigger("triggerFlying");
+          animator.SetBool("isWalking", false);
+          animator.SetBool("isJumping", false);
+          animator.SetBool("isIdle", true);
+      }
+      else if (jumping && !moving_forward)
+      {
+          animator.SetBool("isWalking", false);
+          animator.SetBool("isIdle", false);
+          animator.SetBool("isJumping", true);
       }
 
+
       // Only able to jump if you are on the ground
-      if (IsGrounded() && _userJumped)
+      if (is_grounded && _userJumped)
       {
         _rigidbody.AddForce(Vector3.up * JumpMultiplier, ForceMode.Impulse);
       }

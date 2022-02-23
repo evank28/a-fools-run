@@ -57,7 +57,7 @@ public class MoveChicken : MonoBehaviour
       var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);
       _rigidbody.velocity += transform.forward * _playerInput * MoveScale;
       animator.SetFloat("velocity", norm);
-      if (moving_forward)
+      if (moving_forward && !jumping)
       {
           animator.SetBool("isIdle", false);
           animator.SetBool("isJumping", false);
@@ -69,11 +69,22 @@ public class MoveChicken : MonoBehaviour
           animator.SetBool("isJumping", false);
           animator.SetBool("isIdle", true);
       }
-      else if (jumping && !moving_forward)
+      else if (jumping)
       {
           animator.SetBool("isWalking", false);
           animator.SetBool("isIdle", false);
           animator.SetBool("isJumping", true);
+          animator.SetBool("isGrounded", false);
+      }
+      else if (is_grounded && !moving_forward)
+      {
+        animator.SetBool("isIdle", true);
+        animator.SetBool("isJumping", false);
+      }
+      else if (is_grounded && moving_forward)
+      {
+        animator.SetBool("isGrounded", true);
+        animator.SetBool("isWalking", true);
       }
 
 

@@ -41,7 +41,8 @@ public class MovePB : MonoBehaviour
         _rotationInput = Input.GetAxis("Horizontal");
         _userJumped = Input.GetButton("Jump");
 
-        moving_forward = Input.GetKey("w") || Input.GetKey("s");
+        moving_forward = Input.GetKey("w") || Input.GetKey("s") ||
+                          Input.GetKey("up") || Input.GetKey("down");
         is_grounded = IsGrounded();
         jumping  = Input.GetKey("space");
     }

@@ -37,7 +37,9 @@ public class Spawn : MonoBehaviour
   }
 
   public void setActivePlayer(GameObject activePlayer) {
+    if (spawnStarted) print("Player is :" +player.ToString());
     player = activePlayer;
+    print("Setting the player to active player: " + activePlayer.ToString());
     if (!spawnStarted) StartCoroutine(spawn());
   }
 }

@@ -25,6 +25,7 @@ public class MovePB : MonoBehaviour
     bool moving_forward;
     bool is_grounded;
     bool jumping;
+    bool sprinting;
 
     void Start()
     {
@@ -45,6 +46,7 @@ public class MovePB : MonoBehaviour
                           Input.GetKey("up") || Input.GetKey("down");
         is_grounded = IsGrounded();
         jumping  = Input.GetKey("space");
+        sprinting = Input.GetKey(KeyCode.LeftShift);
     }
 
     private void FixedUpdate()
@@ -54,31 +56,22 @@ public class MovePB : MonoBehaviour
 
         _transform.rotation = Quaternion.Euler(_userRot);
 
-        // Up is always y so velocity of x and z is clamped down
-        var norm = euclideanNorm(_rigidbody.velocity.x, _rigidbody.velocity.z);
-        _rigidbody.velocity += transform.forward * _playerInput * MoveScale;
-        //animator.SetFloat("velocity", norm);
+        if (sprinting)
+        {
+          _rigidbody.velocity += transform.forward * _playerInput *MoveScale * 2;
+        }
+        else
+        {
+          _rigidbody.velocity += transform.forward * _playerInput * MoveScale;
+        }
+
+        animator.SetBool("isWalking", moving_forward);
+        animator.SetBool("isJumping", jumping);
+        animator.SetBool("IsGrounded", is_grounded);
+        animator.SetBool("isRunning", sprinting);
+        animator.SetBool("isIdle", !moving_forward && is_grounded);
 
 
-        if (moving_forward && !jumping)
-        {
-          animator.SetBool("isWalking", true);
-          animator.SetBool("walkJumping", false);
-        }
-        else if (moving_forward && !is_grounded)
-        {
-          animator.SetBool("isWalking", false);
-          animator.SetBool("walkJumping", true);
-        }
-        else if (jumping && !moving_forward)
-        {
-          animator.SetBool("isJumping", true);
-        }
-        else if (is_grounded && !moving_forward)
-        {
-            animator.SetBool("isWalking", false);
-            animator.SetBool("isJumping", false);
-        }
 
         // Only able to jump if you are on the ground
         if (is_grounded && _userJumped)

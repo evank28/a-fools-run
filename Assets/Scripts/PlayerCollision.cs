@@ -15,7 +15,12 @@ public class PlayerCollision : MonoBehaviour
   void Start()
   {
     // Set the active player to player 2 for now for transform of spawn to work
-    transform.parent.gameObject.GetComponent<Spawn>().setActivePlayer(character2);
+    if (character1.activeSelf)
+      transform.parent.gameObject.GetComponent<Spawn>().setActivePlayer(character1);
+    else if (character2.activeSelf)
+      transform.parent.gameObject.GetComponent<Spawn>().setActivePlayer(character2);
+    else if (character3.activeSelf)
+      transform.parent.gameObject.GetComponent<Spawn>().setActivePlayer(character3);
     hitFinishLine = false;
   }
 
@@ -28,7 +33,7 @@ public class PlayerCollision : MonoBehaviour
 
       collision.collider.gameObject.GetComponent<potionCollision>().Explode();
       if (character1.activeSelf) {
-        print("Changing to character 2\n");
+        print("Changing to character 2");
         character2.transform.position = character1.transform.position;
         character2.transform.rotation = character1.transform.rotation;
         character1.SetActive(false);
@@ -37,7 +42,7 @@ public class PlayerCollision : MonoBehaviour
         camera.GetComponent<CameraController>().PlayerTransform = character2.transform.Find("Focus");
 
       } else if (character2.activeSelf) {
-        print("Changing to character 3\n");
+        print("Changing to character 3");
         character3.transform.position = character2.transform.position;
         character3.transform.rotation = character2.transform.rotation;
         character2.SetActive(false);
@@ -46,7 +51,7 @@ public class PlayerCollision : MonoBehaviour
         camera.GetComponent<CameraController>().PlayerTransform = character3.transform.Find("Focus");
 
       } else if (character3.activeSelf) {
-        print("Changing to character 1\n");
+        print("Changing to character 1");
         character1.transform.position = character3.transform.position;
         character1.transform.rotation = character3.transform.rotation;
         character3.SetActive(false);
